@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "Math/UnrealMathUtility.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/Controller.h"
 
 #include "MapGenerator.generated.h"
 
@@ -23,10 +25,14 @@ protected:
 	virtual void BeginPlay() override;
 	void GenerateMap();
 	void CheckMap(int32 i, int32 j);
+	FVector GenerateRandomSpawnPoint();
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AActor> land;
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AActor> wall;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<APawn> player;
 	TArray<TArray<int32>> Map;
+	TArray<FVector> LandLocations;
 };

@@ -4,6 +4,7 @@
 #include "MapGenerator.h"
 
 #define CUBESIZE 500
+#define SCALE 5
 #define HALFSIZE 250
 
 // Sets default values
@@ -20,21 +21,49 @@ void AMapGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	GenerateMap();
+
+	/// Spawn ocean and land according to Map
 	UWorld *WorldPointer = GetWorld();
 	for (int32 i = 0; i < 20; i++) {
 		for (int32 j = 0; j < 20; j++) {
 			const FVector Location = FVector(CUBESIZE * i - HALFSIZE, CUBESIZE * j - HALFSIZE, 0);
 			const FRotator Rotation = FRotator(0, 0, 0);
 			AActor* ActorPointer;
-			if (Map[i][j] == 2) {
+			if (Map[i][j] == 2) {// map == 2 is ocean, map == 0 is land
 				ActorPointer = WorldPointer->SpawnActor<AActor>(wall, Location, Rotation);
 			}
 			else {
 				ActorPointer = WorldPointer->SpawnActor<AActor>(land, Location, Rotation);
+				LandLocations.Add(Location);
 			}
-			ActorPointer->SetActorScale3D(FVector(5, 5, 1));
+			ActorPointer->SetActorScale3D(FVector(SCALE, SCALE, 1));
 		}
 	}
+	/// Spawn map finish
+
+	///Spawn player
+	FVector SpawnPoint = GenerateRandomSpawnPoint();
+	UE_LOG(LogTemp, Warning, TEXT("%d %d %d"), SpawnPoint.X, SpawnPoint.Y, SpawnPoint.Z);
+	FRotator Rotation = FRotator(0, 0, 0);
+	APlayerController* controller = GetWorld()->GetFirstPlayerController();
+	controller->UnPossess();
+	APawn* CharacterPointer = WorldPointer->SpawnActor<APawn>(player, SpawnPoint, Rotation);
+	controller->Possess(CharacterPointer);
+	///Spawn player finish
+
+
+}
+
+
+
+
+FVector AMapGenerator::GenerateRandomSpawnPoint() {
+	FVector SpawnPoint;
+	int32 idx = FMath::RandRange(0, LandLocations.Num() - 1);
+	SpawnPoint.X = LandLocations[idx].X + FMath::RandRange(-HALFSIZE, HALFSIZE);
+	SpawnPoint.Y = LandLocations[idx].Y + FMath::RandRange(-HALFSIZE, HALFSIZE);
+	SpawnPoint.Z = 0;
+	return SpawnPoint;
 }
 
 void AMapGenerator::CheckMap(int32 i, int32 j)
