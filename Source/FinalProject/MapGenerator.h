@@ -50,6 +50,9 @@ private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AActor> ice;
 
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<AActor> goblin;
+
 	TArray<TArray<int32>> Map;
 	TArray<TArray<int32>> Islands;
 	TArray<int32> IslandsType;

@@ -73,6 +73,9 @@ void AMapGenerator::BeginPlay()
 	controller->Possess(CharacterPointer);
 	///Spawn player finish
 
+	SpawnPoint.X += 100;
+	SpawnPoint.Z += 100;
+	WorldPointer->SpawnActor<APawn>(goblin, SpawnPoint, Rotation);
 
 	//Spawn rock biome
 	int32 Num = TypeLandLocations[3].Num() * 0.5;
