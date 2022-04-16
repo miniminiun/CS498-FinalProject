@@ -73,6 +73,21 @@ void AMapGenerator::BeginPlay()
 	controller->Possess(CharacterPointer);
 	///Spawn player finish
 
+	SpawnPoint.Z += 500;
+	//spawn enemy1
+	SpawnPoint.X += 100;
+	WorldPointer->SpawnActor<AActor>(enemy1, SpawnPoint, Rotation);
+	//spawn enemy2
+	SpawnPoint.X -= 100;
+	SpawnPoint.Y += 100;
+	WorldPointer->SpawnActor<AActor>(enemy2, SpawnPoint, Rotation);
+	//spawn enemy3
+	SpawnPoint.Y -= 200;
+	WorldPointer->SpawnActor<AActor>(enemy3, SpawnPoint, Rotation);
+	//spawn enemy4
+	SpawnPoint.Y += 100;
+	SpawnPoint.X -= 100;
+	WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
 
 	//Spawn rock biome
 	int32 Num = TypeLandLocations[3].Num() * 0.5;
@@ -107,6 +122,9 @@ void AMapGenerator::BeginPlay()
 		SpawnPoint.Z = 200;
 		WorldPointer->SpawnActor<AActor>(tree, SpawnPoint, Rotation);
 	}
+
+	
+
 }
 
 
