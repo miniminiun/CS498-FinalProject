@@ -8,6 +8,8 @@
 #include "Math/UnrealMathUtility.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/Controller.h"
+#include "Engine/DirectionalLight.h"
+#include "Misc/OutputDeviceNull.h"
 
 #include "MapGenerator.generated.h"
 
@@ -20,9 +22,18 @@ public:
 	// Sets default values for this actor's properties
 	AMapGenerator();
 
+	UPROPERTY(EditAnywhere, Category = "Sky");
+	AActor* sun;
+	UPROPERTY(EditAnywhere, Category = "Sky");
+	ADirectionalLight* lightSource;
+	UPROPERTY(EditAnywhere, Category = "Sky");
+	float turnRate;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	void GenerateMap();
 	void CheckMap(int32 i, int32 j, TArray<TArray<int32>> & SmallMap);
 	FVector GenerateRandomSpawnPoint();

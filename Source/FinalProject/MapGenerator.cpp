@@ -11,7 +11,7 @@
 AMapGenerator::AMapGenerator()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	
+	PrimaryActorTick.bCanEverTick = true;
 
 }
 
@@ -418,3 +418,13 @@ void AMapGenerator::GenerateMap()
 //	UE_LOG(LogTemp, Warning, TEXT("hello"));
 //}
 
+void AMapGenerator::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	if (lightSource) {
+		lightSource->AddActorLocalRotation(FRotator(DeltaTime * turnRate, 0,0));
+	}
+	if (sun) {
+		FOutputDeviceNull ar;
+		sun->CallFunctionByNameWithArguments(TEXT("UpdateSunDirection"), ar, NULL, true);
+	}
+}
