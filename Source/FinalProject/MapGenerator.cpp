@@ -12,6 +12,9 @@ AMapGenerator::AMapGenerator()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	for (int i = 0; i < 4; i++) {
+		enemyNumber.Add(7);
+	}
 
 }
 
@@ -73,21 +76,25 @@ void AMapGenerator::BeginPlay()
 	controller->Possess(CharacterPointer);
 	///Spawn player finish
 
-	SpawnPoint.Z += 500;
-	//spawn enemy1
-	SpawnPoint.X += 100;
-	WorldPointer->SpawnActor<AActor>(enemy1, SpawnPoint, Rotation);
-	//spawn enemy2
-	SpawnPoint.X -= 100;
-	SpawnPoint.Y += 100;
-	WorldPointer->SpawnActor<AActor>(enemy2, SpawnPoint, Rotation);
-	//spawn enemy3
-	SpawnPoint.Y -= 200;
-	WorldPointer->SpawnActor<AActor>(enemy3, SpawnPoint, Rotation);
-	//spawn enemy4
-	SpawnPoint.Y += 100;
-	SpawnPoint.X -= 100;
-	WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
+	//SpawnPoint.Z += 500;
+	////spawn enemy1
+	//SpawnPoint.X += 100;
+	//WorldPointer->SpawnActor<AActor>(enemy1, SpawnPoint, Rotation);
+	////spawn enemy2
+	//SpawnPoint.X -= 100;
+	//SpawnPoint.Y += 100;
+	//WorldPointer->SpawnActor<AActor>(enemy2, SpawnPoint, Rotation);
+	////spawn enemy3
+	//SpawnPoint.Y -= 200;
+	//WorldPointer->SpawnActor<AActor>(enemy3, SpawnPoint, Rotation);
+	////spawn enemy4
+	//SpawnPoint.Y += 100;
+	//SpawnPoint.X -= 100;
+	//WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
+
+	//SpawnEnemy();
+	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 5, true);
+	
 
 	//Spawn rock biome
 	int32 Num = TypeLandLocations[3].Num() * 0.5;
@@ -128,7 +135,40 @@ void AMapGenerator::BeginPlay()
 }
 
 
+void AMapGenerator::SpawnEnemy() {
+	AActor* actorPointer;
+	FVector SpawnPoint;
+	FRotator Rotation = FRotator(0, 0, 0);
+	UWorld* WorldPointer = GetWorld();
+	while (enemyNumber[0]) {
+		SpawnPoint = GenerateRandomBiomeSpawnPoint(0);
+		SpawnPoint.Z = 500;
+		actorPointer = WorldPointer->SpawnActor<AActor>(enemy1, SpawnPoint, Rotation);
+		if (actorPointer) enemyNumber[0]--;
+	}
+	while (enemyNumber[1]) {
+		SpawnPoint = GenerateRandomBiomeSpawnPoint(1);
+		SpawnPoint.Z = 500;
+		actorPointer = WorldPointer->SpawnActor<AActor>(enemy2, SpawnPoint, Rotation);
+		if (actorPointer) enemyNumber[1]--;
+	}
+	while (enemyNumber[2]) {
+		SpawnPoint = GenerateRandomBiomeSpawnPoint(2);
+		SpawnPoint.Z = 500;
+		actorPointer = WorldPointer->SpawnActor<AActor>(enemy3, SpawnPoint, Rotation);
+		if (actorPointer) enemyNumber[2]--;
+	}
+	while (enemyNumber[3]) {
+		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
+		SpawnPoint.Z = 500;
+		actorPointer = WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
+		if (actorPointer) enemyNumber[3]--;
+	}
+}
 
+void AMapGenerator::PrintMsg() {
+	UE_LOG(LogTemp, Warning, TEXT("Timer chenggong"));
+}
 
 FVector AMapGenerator::GenerateRandomSpawnPoint() {
 	FVector SpawnPoint;
@@ -427,4 +467,8 @@ void AMapGenerator::Tick(float DeltaTime) {
 		FOutputDeviceNull ar;
 		sun->CallFunctionByNameWithArguments(TEXT("UpdateSunDirection"), ar, NULL, true);
 	}
+}
+
+void AMapGenerator::decreaseEnemy(int32 i) {
+	enemyNumber[i]++;
 }

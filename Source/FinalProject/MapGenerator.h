@@ -28,6 +28,13 @@ public:
 	ADirectionalLight* lightSource;
 	UPROPERTY(EditAnywhere, Category = "Sky");
 	float turnRate;
+	TArray<int32> enemyNumber;
+	void SpawnEnemy();
+	FTimerHandle timeHandler;
+	UFUNCTION(BlueprintCallable, Category = "Decrement")
+	void decreaseEnemy(int32 i);
+	void PrintMsg();
+
 
 
 protected:
