@@ -96,39 +96,58 @@ void AMapGenerator::BeginPlay()
 	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 5, true);
 	
 
-	Rotation.Roll = -30;
+	//Rotation.Roll = -30;
 	//Spawn rock biome
-	int32 Num = TypeLandLocations[3].Num() * 0.5;
+	AActor* biomePointer;
+	int32 Num = TypeLandLocations[3].Num() * 0.2;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
+		Rotation.Roll = FMath::RandRange(-30, +30);
+		Rotation.Pitch = FMath::RandRange(-30, +30);
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
-		SpawnPoint.Z = 150;
-		WorldPointer->SpawnActor<AActor>(rock, SpawnPoint, Rotation);
+		SpawnPoint.Z = 0;
+		biomePointer = WorldPointer->SpawnActor<AActor>(rock, SpawnPoint, Rotation);
+		float scale = FMath::RandRange(0.2, 1);
+		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 	}
+	Rotation.Roll = 0;
+	Rotation.Pitch = 0;
 	//spawn desert biome
-	Num = TypeLandLocations[2].Num() * 0.5;
+	Num = TypeLandLocations[2].Num() * 0.2;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(2);
-		SpawnPoint.Z = 200;
-		WorldPointer->SpawnActor<AActor>(cactus, SpawnPoint, Rotation);
+		SpawnPoint.Z = 30;
+		biomePointer = WorldPointer->SpawnActor<AActor>(cactus, SpawnPoint, Rotation);
+		float scale = FMath::RandRange(5, 10);
+		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 	}
 
 	//spawn ice biome
-	Num = TypeLandLocations[1].Num() * 0.5;
+	
+	Num = TypeLandLocations[1].Num() * 0.2;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
+		Rotation.Roll = FMath::RandRange(65, 115);
+		Rotation.Pitch = FMath::RandRange(-30, 30);
+		
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(1);
-		SpawnPoint.Z = 150;
-		WorldPointer->SpawnActor<AActor>(ice, SpawnPoint, Rotation);
+		SpawnPoint.Z = 40;
+		biomePointer = WorldPointer->SpawnActor<AActor>(ice, SpawnPoint, Rotation);
+		float scale = FMath::RandRange(10, 20);
+		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 	}
+	Rotation.Roll = 0;
+	Rotation.Pitch = 0;
 	//spawn forest biome
-	Num = TypeLandLocations[0].Num() * 0.5;
+	Num = TypeLandLocations[0].Num() * 0.2;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(0);
-		SpawnPoint.Z = 200;
-		WorldPointer->SpawnActor<AActor>(tree, SpawnPoint, Rotation);
+		SpawnPoint.Z = 70;
+		biomePointer = WorldPointer->SpawnActor<AActor>(tree, SpawnPoint, Rotation);
+		float scale = FMath::RandRange(float(0.1), float(0.3));
+		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 	}
 
 	
