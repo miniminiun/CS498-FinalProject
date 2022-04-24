@@ -92,16 +92,17 @@ void AMapGenerator::BeginPlay()
 	//SpawnPoint.X -= 100;
 	//WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
 
-	//SpawnEnemy();
+	SpawnEnemy();
 	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 5, true);
 	
 
+	Rotation.Roll = -30;
 	//Spawn rock biome
 	int32 Num = TypeLandLocations[3].Num() * 0.5;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
-		SpawnPoint.Z = 50;
+		SpawnPoint.Z = 150;
 		WorldPointer->SpawnActor<AActor>(rock, SpawnPoint, Rotation);
 	}
 	//spawn desert biome
@@ -118,7 +119,7 @@ void AMapGenerator::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(1);
-		SpawnPoint.Z = 200;
+		SpawnPoint.Z = 150;
 		WorldPointer->SpawnActor<AActor>(ice, SpawnPoint, Rotation);
 	}
 	//spawn forest biome
@@ -184,7 +185,7 @@ FVector AMapGenerator::GenerateRandomBiomeSpawnPoint(int32 idxtype) {
 	FVector SpawnPoint;
 	int32 idx = FMath::RandRange(0, TypeLandLocations[idxtype].Num() - 1);
 	SpawnPoint.X = TypeLandLocations[idxtype][idx][0] * CUBESIZE - HALFSIZE + FMath::RandRange(-HALFSIZE + 50, HALFSIZE - 50);
-	SpawnPoint.Y = TypeLandLocations[idxtype][idx][1] * CUBESIZE - HALFSIZE + FMath::RandRange(-HALFSIZE + 5, HALFSIZE - 5);
+	SpawnPoint.Y = TypeLandLocations[idxtype][idx][1] * CUBESIZE - HALFSIZE + FMath::RandRange(-HALFSIZE, HALFSIZE - 20);
 	SpawnPoint.Z = 0;
 	return SpawnPoint;
 }
