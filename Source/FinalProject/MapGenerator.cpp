@@ -143,6 +143,7 @@ void AMapGenerator::BeginPlay()
 	Num = TypeLandLocations[0].Num() * 0.2;
 	UE_LOG(LogTemp, Warning, TEXT("%d"), Num);
 	for (int32 i = 0; i < Num; i++) {
+		Rotation.Yaw = FMath::RandRange(0, 360);
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(0);
 		SpawnPoint.Z = 70;
 		biomePointer = WorldPointer->SpawnActor<AActor>(tree, SpawnPoint, Rotation);
@@ -162,25 +163,25 @@ void AMapGenerator::SpawnEnemy() {
 	UWorld* WorldPointer = GetWorld();
 	while (enemyNumber[0]) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(0);
-		SpawnPoint.Z = 500;
+		SpawnPoint.Z = 300;
 		actorPointer = WorldPointer->SpawnActor<AActor>(enemy1, SpawnPoint, Rotation);
 		if (actorPointer) enemyNumber[0]--;
 	}
 	while (enemyNumber[1]) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(1);
-		SpawnPoint.Z = 500;
+		SpawnPoint.Z = 300;
 		actorPointer = WorldPointer->SpawnActor<AActor>(enemy2, SpawnPoint, Rotation);
 		if (actorPointer) enemyNumber[1]--;
 	}
 	while (enemyNumber[2]) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(2);
-		SpawnPoint.Z = 500;
+		SpawnPoint.Z = 300;
 		actorPointer = WorldPointer->SpawnActor<AActor>(enemy3, SpawnPoint, Rotation);
 		if (actorPointer) enemyNumber[2]--;
 	}
 	while (enemyNumber[3]) {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
-		SpawnPoint.Z = 500;
+		SpawnPoint.Z = 300;
 		actorPointer = WorldPointer->SpawnActor<AActor>(enemy4, SpawnPoint, Rotation);
 		if (actorPointer) enemyNumber[3]--;
 	}
