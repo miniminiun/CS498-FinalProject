@@ -173,7 +173,7 @@ void AMapGenerator::SpawnEnvironment() {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
 		SpawnPoint.Z = 0;
 		biomePointer = WorldPointer->SpawnActor<AActor>(rock, SpawnPoint, Rotation);
-		float scale = FMath::RandRange(0.2, 1);
+		float scale = FMath::RandRange(float(0.2), float(1.0));
 		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 		environmentNumber[3]--;
 	}
