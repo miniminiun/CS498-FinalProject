@@ -29,10 +29,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Sky");
 	float turnRate;
 	TArray<int32> enemyNumber;
+	TArray<int32> environmentNumber;
 	void SpawnEnemy();
+	void SpawnEnvironment();
 	FTimerHandle timeHandler;
 	UFUNCTION(BlueprintCallable, Category = "Decrement")
 	void decreaseEnemy(int32 i);
+	UFUNCTION(BlueprintCallable, Category = "Increment")
+	void incrementEnvironment(int32 i);
 	void PrintMsg();
 
 
