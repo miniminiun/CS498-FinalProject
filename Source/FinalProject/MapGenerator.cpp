@@ -101,6 +101,8 @@ void AMapGenerator::BeginPlay()
 	
 	SpawnEnvironment();
 	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnvironment, 5, true);
+
+	//WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnFinalBoss, 5, false);
 	//Rotation.Roll = -30;
 	//Spawn rock biome
 	//AActor* biomePointer;
@@ -158,6 +160,17 @@ void AMapGenerator::BeginPlay()
 
 	
 
+}
+
+void AMapGenerator::SpawnFinalBoss() {
+	AActor* actorPointer;
+	FRotator Rotation = FRotator(0, 0, 0);
+	FVector SpawnPoint;
+	UWorld* WorldPointer = GetWorld();
+	do {
+		SpawnPoint = GenerateRandomSpawnPoint();
+		actorPointer = WorldPointer->SpawnActor<AActor>(finalboss, SpawnPoint, Rotation);
+	} while (!actorPointer);
 }
 
 void AMapGenerator::SpawnEnvironment() {

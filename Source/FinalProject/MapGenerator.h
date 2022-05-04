@@ -32,6 +32,7 @@ public:
 	TArray<int32> environmentNumber;
 	void SpawnEnemy();
 	void SpawnEnvironment();
+	void SpawnFinalBoss();
 	FTimerHandle timeHandler;
 	UFUNCTION(BlueprintCallable, Category = "Decrement")
 	void decreaseEnemy(int32 i);
@@ -80,6 +81,8 @@ private:
 	TSubclassOf<APawn> enemy3;
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<APawn> enemy4;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<APawn> finalboss;
 
 	TArray<TArray<int32>> Map;
 	TArray<TArray<int32>> Islands;
