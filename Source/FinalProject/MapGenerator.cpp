@@ -97,10 +97,10 @@ void AMapGenerator::BeginPlay()
 	}
 
 	SpawnEnemy();
-	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 5, true);
+	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 70, true);
 	
 	SpawnEnvironment();
-	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnvironment, 5, true);
+	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnvironment, 70, true);
 
 	//WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnFinalBoss, 5, false);
 	//Rotation.Roll = -30;
@@ -186,7 +186,7 @@ void AMapGenerator::SpawnEnvironment() {
 		SpawnPoint = GenerateRandomBiomeSpawnPoint(3);
 		SpawnPoint.Z = 0;
 		biomePointer = WorldPointer->SpawnActor<AActor>(rock, SpawnPoint, Rotation);
-		float scale = FMath::RandRange(float(0.2), float(1.0));
+		float scale = FMath::RandRange(float(0.5), float(1.0));
 		biomePointer->SetActorScale3D(FVector(scale, scale, scale));
 		environmentNumber[3]--;
 	}
