@@ -97,10 +97,10 @@ void AMapGenerator::BeginPlay()
 	}
 
 	SpawnEnemy();
-	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 5, true);
+	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnemy, 60, true);
 	
 	SpawnEnvironment();
-	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnvironment, 5, true);
+	WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnEnvironment, 60, true);
 
 	//WorldPointer->GetTimerManager().SetTimer(timeHandler, this, &AMapGenerator::SpawnFinalBoss, 5, false);
 	//Rotation.Roll = -30;
