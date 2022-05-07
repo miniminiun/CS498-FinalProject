@@ -64,12 +64,16 @@ void AMapGenerator::BeginPlay()
 	/// Spawn map finish
 
 	///Spawn player
-	FVector SpawnPoint = GenerateRandomSpawnPoint();
+	FVector SpawnPoint;
 	UE_LOG(LogTemp, Warning, TEXT("%d %d %d"), SpawnPoint.X, SpawnPoint.Y, SpawnPoint.Z);
 	FRotator Rotation = FRotator(0, 0, 0);
 	APlayerController* controller = GetWorld()->GetFirstPlayerController();
 	controller->UnPossess();
-	APawn* CharacterPointer = WorldPointer->SpawnActor<APawn>(player, SpawnPoint, Rotation);
+	APawn* CharacterPointer = NULL;
+	while (!CharacterPointer) {
+		SpawnPoint = GenerateRandomBiomeSpawnPoint(0);
+		CharacterPointer = WorldPointer->SpawnActor<APawn>(player, SpawnPoint, Rotation);
+	}
 	controller->Possess(CharacterPointer);
 	///Spawn player finish
 
